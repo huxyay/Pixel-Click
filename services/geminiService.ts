@@ -21,8 +21,8 @@ const SAFETY_SETTINGS = [
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const generateCursorSet = async (userPrompt: string): Promise<GenerationResult[]> => {
-  if (!apiKey) {
-    throw new Error("API Key is missing. Please check your configuration.");
+  if (!apiKey || apiKey === 'YOUR_GEMINI_API_KEY_HERE') {
+    throw new Error("API Key is missing or invalid. Please add your API_KEY in index.html.");
   }
 
   // Simplified prompt structure to improve instruction following
@@ -118,8 +118,6 @@ export const generateCursorSet = async (userPrompt: string): Promise<GenerationR
         const textPart = response.candidates?.[0]?.content?.parts?.find(part => part.text)?.text;
         console.warn(`Generation failed for ${p.type}. Model output:`, textPart);
         
-        // If we get a refusal, we might want to skip or retry, but for now we throw
-        // to alert the UI.
         throw new Error(`Model refused to generate image for ${p.type}`);
       }
 

@@ -20,6 +20,15 @@
         font-family: 'VT323', monospace;
       }
     </style>
+    <script>
+      // Polyfill for process.env for compatibility with the Gemini SDK in browser environments
+      // if the bundler doesn't replace it automatically.
+      window.process = {
+        env: {
+          API_KEY: 'YOUR_GEMINI_API_KEY_HERE'
+        }
+      };
+    </script>
   <script type="importmap">
 {
   "imports": {
@@ -27,8 +36,8 @@
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
     "react/": "https://esm.sh/react@^19.2.4/",
     "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "jszip": "https://esm.sh/jszip@3.10.1"
+    "lucide-react": "https://esm.sh/lucide-react@^0.574.0",
+    "jszip": "https://esm.sh/jszip@^3.10.1"
   }
 }
 </script>

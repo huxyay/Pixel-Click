@@ -37,11 +37,6 @@ export const removeBackground = (base64Data: string): Promise<string> => {
       // Tolerance for color matching (handles compression artifacts)
       const tolerance = 40;
 
-      // Safety check: Don't remove white if the background looks white-ish,
-      // unless the prompt specifically asked for white (which we didn't).
-      // However, if the model ignored us and gave white background, we might be stuck.
-      // But we switched prompt to Magenta.
-      
       // Helper to check if pixel is close to background color
       const isBackground = (r: number, g: number, b: number) => {
         // Option 1: Dynamic check against top-left pixel

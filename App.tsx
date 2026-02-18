@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { MousePointer2, Sparkles, AlertTriangle } from 'lucide-react';
 import { generateCursorSet } from './services/geminiService';
-import { CursorSet, CursorType } from './types';
+import { CursorSet } from './types';
 import { PROFANITY_LIST } from './constants';
 import CursorDisplay from './components/CursorDisplay';
 import TestArea from './components/TestArea';
@@ -70,7 +70,8 @@ const App: React.FC = () => {
 
       setCursors(newCursors);
     } catch (err) {
-      setError("Failed to generate cursors. Please check your API key and try again.");
+      console.error(err);
+      setError("Failed to generate cursors. Please check your API key in index.html and try again.");
     } finally {
       setIsGenerating(false);
     }
