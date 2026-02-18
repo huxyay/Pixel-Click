@@ -4,11 +4,15 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './', // Ensures assets are loaded correctly on GitHub Pages (relative paths)
+  base: './', // Ensures relative paths work on GitHub Pages
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    // We removed 'rollupOptions' to allow Vite to bundle dependencies normally.
-    // This is the most robust way to ensure the app works in both Preview and Production.
+    target: 'esnext', // Optimizes for modern browsers
+    assetsDir: 'assets',
+  },
+  // explicit define to ensure process.env.API_KEY doesn't crash the build if not polyfilled
+  define: {
+    'process.env.API_KEY': JSON.stringify(process.env.API_KEY || 'YOUR_GEMINI_API_KEY_HERE')
   }
 });

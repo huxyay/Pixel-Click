@@ -21,7 +21,7 @@
       }
     </style>
     <script>
-      // Polyfill for process.env for compatibility with the Gemini SDK in browser environments
+      // Fallback for environment variables in case they aren't replaced during build
       window.process = {
         env: {
           API_KEY: 'YOUR_GEMINI_API_KEY_HERE'
