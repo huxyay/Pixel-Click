@@ -4,15 +4,16 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './', // Ensures relative paths work on GitHub Pages
+  base: './', // Ensures assets are loaded correctly on GitHub Pages (relative paths)
   build: {
     outDir: 'dist',
     emptyOutDir: true,
     target: 'esnext', // Optimizes for modern browsers
-    assetsDir: 'assets',
   },
-  // explicit define to ensure process.env.API_KEY doesn't crash the build if not polyfilled
   define: {
-    'process.env.API_KEY': JSON.stringify(process.env.API_KEY || 'YOUR_GEMINI_API_KEY_HERE')
+    // This ensures process.env.API_KEY is replaced with the actual value during build
+    'process.env.API_KEY': JSON.stringify(process.env.API_KEY || 'YOUR_GEMINI_API_KEY_HERE'),
+    // Prevents "process is not defined" errors in some third-party libs
+    'process.env': {} 
   }
 });
