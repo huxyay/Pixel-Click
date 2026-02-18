@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pixel Click</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700&family=VT323&display=swap');
       
@@ -23,6 +22,7 @@
     </style>
     <script>
       // Polyfill for process.env for compatibility with the Gemini SDK in browser environments
+      // This ensures the app works in both development (Preview) and if built for production.
       window.process = {
         env: {
           API_KEY: 'YOUR_GEMINI_API_KEY_HERE'
@@ -32,19 +32,18 @@
   <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "@google/genai": "https://esm.sh/@google/genai@0.1.1",
-    "lucide-react": "https://esm.sh/lucide-react@0.263.1",
-    "jszip": "https://esm.sh/jszip@3.10.1",
+    "react": "https://esm.sh/react@^19.2.4",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "jszip": "https://esm.sh/jszip@^3.10.1",
+    "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.574.0"
   }
 }
 </script>
 </head>
   <body class="bg-[#ffdca4] text-[#4a2c0f] antialiased bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')]">
     <div id="root"></div>
-    <script type="text/babel" data-type="module" src="./index.tsx"></script>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>

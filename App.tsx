@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { MousePointer2, Sparkles, AlertTriangle } from 'lucide-react';
-import { generateCursorSet } from './services/geminiService.ts';
-import { CursorSet } from './types.ts';
-import { PROFANITY_LIST } from './constants.ts';
-import CursorDisplay from './components/CursorDisplay.tsx';
-import TestArea from './components/TestArea.tsx';
-import InstallationGuide from './components/InstallationGuide.tsx';
+import { generateCursorSet } from './services/geminiService';
+import { CursorSet } from './types';
+import { PROFANITY_LIST } from './constants';
+import CursorDisplay from './components/CursorDisplay';
+import TestArea from './components/TestArea';
+import InstallationGuide from './components/InstallationGuide';
 
 const App: React.FC = () => {
   const [prompt, setPrompt] = useState('');
