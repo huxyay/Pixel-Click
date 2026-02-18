@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
-import { CursorType } from "../types";
-import { removeBackground } from "../utils/imageHelper";
+import { CursorType } from "../types.ts";
+import { removeBackground } from "../utils/imageHelper.ts";
 
 const apiKey = process.env.API_KEY || '';
 const ai = new GoogleGenAI({ apiKey });

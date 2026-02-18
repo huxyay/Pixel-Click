@@ -1,5 +1,5 @@
 import JSZip from 'jszip';
-import { CursorSet } from '../types';
+import { CursorSet } from '../types.ts';
 
 /**
  * Takes a base64 string (assumed to be an image with a specific background color),

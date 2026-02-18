@@ -1,6 +1,6 @@
 import React from 'react';
-import { CursorSet, CursorType } from '../types';
-import { downloadCursor, downloadCursorSetZip } from '../utils/imageHelper';
+import { CursorSet, CursorType } from '../types.ts';
+import { downloadCursor, downloadCursorSetZip } from '../utils/imageHelper.ts';
 import { Download, Loader2, Package } from 'lucide-react';
 
 interface CursorDisplayProps {

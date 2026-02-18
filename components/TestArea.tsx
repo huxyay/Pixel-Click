@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CursorSet } from '../types';
+import { CursorSet } from '../types.ts';
 
 interface TestAreaProps {
   cursors: CursorSet;
