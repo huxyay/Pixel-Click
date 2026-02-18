@@ -22,7 +22,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const generateCursorSet = async (userPrompt: string): Promise<GenerationResult[]> => {
   if (!apiKey || apiKey === 'YOUR_GEMINI_API_KEY_HERE') {
-    throw new Error("API Key is missing or invalid. Please add your API_KEY in index.html.");
+    throw new Error("API Key is missing or invalid. Please add your API_KEY in index.html or environment.");
   }
 
   // Simplified prompt structure to improve instruction following
@@ -115,10 +115,8 @@ export const generateCursorSet = async (userPrompt: string): Promise<GenerationR
       }
 
       if (!base64Data) {
-        const textPart = response.candidates?.[0]?.content?.parts?.find(part => part.text)?.text;
-        console.warn(`Generation failed for ${p.type}. Model output:`, textPart);
-        
-        throw new Error(`Model refused to generate image for ${p.type}`);
+        console.warn(`Generation failed for ${p.type}. No image data returned.`);
+        continue; // Skip this one but keep others
       }
 
       const transparentBase64 = await removeBackground(base64Data);
@@ -130,8 +128,12 @@ export const generateCursorSet = async (userPrompt: string): Promise<GenerationR
 
     } catch (error) {
       console.error(`Error generating ${p.type}:`, error);
-      throw new Error(`Failed to generate image for ${p.type}`);
+      // We continue to the next one instead of crashing the whole set
     }
+  }
+
+  if (results.length === 0) {
+    throw new Error("Failed to generate any cursors. Please try a different prompt.");
   }
 
   return results;
