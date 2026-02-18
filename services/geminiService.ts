@@ -49,8 +49,8 @@ export const generateCursorSet = async (userPrompt: string): Promise<GenerationR
       type: CursorType.POINTING,
       text: `${basePrompt}
         Type: Link Select Pointer.
-        Visual: A pixelated HAND pointing to the TOP-LEFT corner. Index finger extended.
-        Decoration: Add a small "${userPrompt}" themed item near the wrist or hand.
+        Visual: A pixelated HAND pointing to the TOP-LEFT corner. The index finger must be extended pointing up-left.
+        Decoration: Add a small "${userPrompt}" themed item on the back of the hand.
       `
     },
     {
