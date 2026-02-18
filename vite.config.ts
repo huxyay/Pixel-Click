@@ -12,8 +12,6 @@ export default defineConfig({
   },
   define: {
     // This ensures process.env.API_KEY is replaced with the actual value during build
-    'process.env.API_KEY': JSON.stringify(process.env.API_KEY || 'YOUR_GEMINI_API_KEY_HERE'),
-    // Prevents "process is not defined" errors in some third-party libs
-    'process.env': {} 
+    'process.env.API_KEY': JSON.stringify(process.env.API_KEY || 'YOUR_GEMINI_API_KEY_HERE')
   }
 });
