@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/Pixel-Click/', // GitHub Pages base path
+  base: '/Pixel-Click/', // GitHub Pages URL path
   build: {
     outDir: 'dist',
     emptyOutDir: true,
