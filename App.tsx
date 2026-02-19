@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { MousePointer2, Sparkles, AlertTriangle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { MousePointer2, Sparkles, AlertTriangle, Key } from 'lucide-react';
 import { generateCursorSet } from './services/geminiService';
 import { CursorSet } from './types';
 import { PROFANITY_LIST } from './constants';
@@ -12,6 +12,9 @@ const App: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [warning, setWarning] = useState<string | null>(null);
+  const [showApiKeyInput, setShowApiKeyInput] = useState(false);
+  const [apiKey, setApiKey] = useState('');
+  const [hasApiKey, setHasApiKey] = useState(false);
   
   const [cursors, setCursors] = useState<CursorSet>({
     normal: null,
@@ -20,6 +23,24 @@ const App: React.FC = () => {
     clicking: null,
     typing: null
   });
+
+  useEffect(() => {
+    const storedKey = localStorage.getItem('GEMINI_API_KEY');
+    if (storedKey && storedKey !== 'YOUR_GEMINI_API_KEY_HERE') {
+      setHasApiKey(true);
+      setApiKey(storedKey);
+    }
+  }, []);
+
+  const handleSaveApiKey = () => {
+    if (apiKey.trim()) {
+      localStorage.setItem('GEMINI_API_KEY', apiKey.trim());
+      window.process.env.API_KEY = apiKey.trim();
+      setHasApiKey(true);
+      setShowApiKeyInput(false);
+      setError(null);
+    }
+  };
 
   const checkProfanity = (text: string): boolean => {
     const lowerText = text.toLowerCase();
@@ -41,10 +62,15 @@ const App: React.FC = () => {
     if (!prompt.trim()) return;
     if (warning) return;
 
+    if (!hasApiKey) {
+      setError("Please add your Gemini API key first!");
+      setShowApiKeyInput(true);
+      return;
+    }
+
     setIsGenerating(true);
     setError(null);
     
-    // Reset cursors for a fresh loading state visual
     setCursors({
       normal: null,
       pointing: null,
@@ -71,7 +97,7 @@ const App: React.FC = () => {
       setCursors(newCursors);
     } catch (err) {
       console.error(err);
-      setError("Failed to generate cursors. Please check your API key in index.html and try again.");
+      setError("Failed to generate cursors. Please check your API key and try again.");
     } finally {
       setIsGenerating(false);
     }
@@ -96,7 +122,43 @@ const App: React.FC = () => {
               Customize your own pixel cursors for your desktop!
             </p>
           </div>
+          
+          {/* API Key Button */}
+          <div className="mt-6">
+            <button
+              onClick={() => setShowApiKeyInput(!showApiKeyInput)}
+              className="inline-flex items-center gap-2 bg-[#8b5a2b] text-[#ffdca4] px-4 py-2 rounded-lg font-bold text-xs hover:bg-[#5c3a21] transition-all shadow-[2px_2px_0px_0px_#5c3a21] active:translate-y-1 active:shadow-none border-2 border-[#5c3a21]"
+            >
+              <Key size={16} />
+              {hasApiKey ? 'Update API Key' : 'Add API Key'}
+            </button>
+          </div>
         </div>
+
+        {/* API Key Input Section */}
+        {showApiKeyInput && (
+          <div className="bg-[#fff8dc] rounded-xl shadow-[6px_6px_0px_0px_rgba(139,90,43,0.3)] border-4 border-[#8b5a2b] p-6 mb-8">
+            <h3 className="font-pixel text-sm text-[#5c3a21] mb-4">Enter Your Gemini API Key</h3>
+            <p className="text-xs text-[#8b5a2b] mb-4">
+              Get your free API key from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="underline font-bold">Google AI Studio</a>
+            </p>
+            <div className="flex gap-3">
+              <input
+                type="password"
+                value={apiKey}
+                onChange={(e) => setApiKey(e.target.value)}
+                placeholder="AIza..."
+                className="flex-1 rounded-lg bg-white text-[#3e2723] placeholder-[#bcaaa4] border-2 border-[#d4a373] p-3 text-sm focus:outline-none focus:border-[#8b5a2b]"
+              />
+              <button
+                onClick={handleSaveApiKey}
+                className="bg-[#8b5a2b] text-[#ffdca4] px-6 py-3 rounded-lg font-bold text-sm hover:bg-[#5c3a21] transition-all shadow-[2px_2px_0px_0px_#5c3a21] active:translate-y-1 active:shadow-none border-2 border-[#5c3a21]"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Input Section */}
         <div className="bg-[#ffecb3] rounded-xl shadow-[6px_6px_0px_0px_rgba(139,90,43,0.3)] border-4 border-[#8b5a2b] p-8 mb-10 relative">
