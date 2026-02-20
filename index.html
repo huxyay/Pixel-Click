@@ -25,11 +25,10 @@
       }
     </style>
     <script>
-      // API Key Management
-      // Users can add their Gemini API key via browser prompt or localStorage
+      // Fallback for environment variables in case they aren't replaced during build
       window.process = {
         env: {
-          API_KEY: localStorage.getItem('GEMINI_API_KEY') || 'YOUR_GEMINI_API_KEY_HERE'
+          API_KEY: 'YOUR_GEMINI_API_KEY_HERE'
         }
       };
     </script>
